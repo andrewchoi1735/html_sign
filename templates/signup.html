@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h2>회원가입</h2>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+    {% if message %}
+    <p class="success">{{ message }}</p>
+    {% endif %}
+
+    <form method="post">
+        <!-- 아이디 + 중복 확인 -->
+        <div class="input-row">
+            <input type="text" id="id-input" name="id" placeholder="아이디" value="{{ form.get('id', '') }}" required>
+            <button type="button" id="check-id-btn" class="small-btn">중복 확인</button>
+        </div>
+        <p id="check-id-msg"></p>
+        <input type="hidden" id="id-valid" value="false">
+
+        <!-- 비밀번호 입력 -->
+        <input type="password" id="password" name="password" placeholder="비밀번호" required>
+        <input type="password" id="password-check" name="password_check" placeholder="비밀번호 확인" required>
+
+        <!-- 이름 / 이메일 -->
+        <input type="text" id="name" name="name" placeholder="이름" value="{{ form.get('name', '') }}" required>
+        <input type="email" id="email" name="email" placeholder="이메일" value="{{ form.get('email', '') }}" required>
+
+        <!-- 약관 동의 -->
+        <div class="checkbox-wrapper">
+            <label class="checkbox-label">
+                {% if form and form.get('terms') %}
+                <input type="checkbox" id="terms" name="terms" checked>
+                {% else %}
+                <input type="checkbox" id="terms" name="terms">
+                {% endif %}
+                <span>이용약관 동의</span>
+            </label>
+        </div>
+
+        <!-- 회원가입 버튼 -->
+        <button type="submit" id="signup-btn" disabled>회원가입</button>
+    </form>
+</div>
+
+<!-- 스크립트 -->
+<script src="/static/script.js"></script>
+</body>
+</html>
