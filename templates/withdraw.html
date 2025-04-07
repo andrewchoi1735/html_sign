@@ -6,23 +6,39 @@
 </head>
 <body>
 <div class="container">
-    <div class="title-bar">
         <h2>회원탈퇴</h2>
-        <a href="/">홈으로</a>
-    </div>
-    <form method="post">
-        <input type="password" name="password" placeholder="비밀번호 확인" required>
-        <input type="text" name="reason" placeholder="탈퇴 사유" required>
 
-        <div class="checkbox-wrapper">
-            <label class="checkbox-label">
-                <input type="checkbox" name="agree">
-                <span>탈퇴에 동의합니다</span>
-            </label>
-        </div>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
 
-        <button type="submit" class="btn btn-danger">탈퇴하기</button>
-    </form>
+        <form method="post">
+            <input type="password" name="password" placeholder="비밀번호 확인" required>
+            <input type="text" name="reason" placeholder="탈퇴 사유" required>
+
+            <div class="checkbox-wrapper">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="agree">
+                    <span>탈퇴에 동의합니다</span>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-danger">탈퇴하기</button>
+            <a href="/" class="btn btn-secondary">홈으로</a>
+        </form>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const agreeCheckbox = document.querySelector('input[name="agree"]');
+        const submitBtn = document.querySelector('button[type="submit"]');
+
+        function toggleButton() {
+            submitBtn.disabled = !agreeCheckbox.checked;
+        }
+
+        agreeCheckbox.addEventListener('change', toggleButton);
+        toggleButton();  // 초기 상태 반영
+    });
+</script>
 </body>
 </html>

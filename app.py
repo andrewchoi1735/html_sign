@@ -96,21 +96,22 @@ def withdraw():
 	if 'user' not in session:
 		return redirect('/login')
 
+	user_id = session['user']
+
 	if request.method == 'POST':
-		user_id = session['user']
 		if request.form['password'] != users[user_id]['password']:
-			return "비밀번호 불일치"
+			return render_template('withdraw.html', error="비밀번호가 일치하지 않습니다.")
 		if 'agree' not in request.form:
-			return "동의 필요"
+			return render_template('withdraw.html', error="탈퇴에 동의해주세요.")
+
 		reason = request.form['reason']
 		del users[user_id]
 		save_users(users)
 		session.pop('user')
+
 		return render_template('withdraw_success.html', user=user_id, reason=reason)
 
-	# GET 요청일 경우 → 탈퇴 폼 보여줌
 	return render_template('withdraw.html')
-
 
 
 @app.route('/logout')
